@@ -1,0 +1,95 @@
+
+using System;
+using System.IO;
+using System.Linq;
+
+namespace FileHandling
+{
+
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Enter the file path");
+            string path = Console.ReadLine();
+            bool b = false;
+
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("File not found!");
+                return;
+            }
+            while (!b)
+            {
+
+                Console.WriteLine("Choose the type of analysis:");
+                Console.WriteLine("1.Count No of words");
+                Console.WriteLine("2.Count No of characters");
+                Console.WriteLine("3.Count No of lines");
+                Console.WriteLine("4.Count occurrences of specific word");
+                Console.WriteLine("5.Exit");
+
+                int choice = int.Parse(Console.ReadLine());
+
+
+                switch (choice)
+                {
+                    case 1:
+                        CountNoOfWords(path);
+                        break;
+                    case 2:
+                        CountNoOfCharacters(path);
+                        break;
+                    case 3:
+                        CountNoOfLines(path);
+                        break;
+                    case 4:
+                        Console.WriteLine("Enter the word to search:");
+                        string word = Console.ReadLine();
+                        CountWordOccurrences(path, word);
+                        break;
+                    case 5:
+                        b = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice!");
+                        break;
+                }
+            }
+        }
+
+        static void CountNoOfWords(string path)
+        {
+            string text = File.ReadAllText(path);
+            string[] nowords = text.Split(" ");
+            int words = nowords.Length;
+            Console.WriteLine("No Of Word count "+words);
+        }
+
+        static void CountNoOfCharacters(string path)
+        {
+            string text = File.ReadAllText(path);//used to read all text
+            int charCount = text.Length;
+            Console.WriteLine("No Of Character :"+charCount);
+        }
+
+        static void CountNoOfLines(string path)
+        {
+            int lineCount = File.ReadLines(path).Count();
+            Console.WriteLine("No Of Line count "+lineCount);
+        }
+
+        static void CountWordOccurrences(string path, string word)
+        {
+            string text = File.ReadAllText(path);
+            int count = 0;
+            int index = text.IndexOf(word, StringComparison.OrdinalIgnoreCase);
+            while (index != -1)
+            {
+                count++;
+                index = text.IndexOf(word, index + 1, StringComparison.OrdinalIgnoreCase);
+            }
+            Console.WriteLine("Occurrences of " +word+"count");
+        }
+    }
+}
