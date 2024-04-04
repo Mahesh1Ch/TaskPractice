@@ -1,0 +1,57 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+//CustomCol c = new CustomCol();
+//
+//
+namespace CustomCollection
+{
+    public class CustomCol<T> : IEnumerable<T> //: ICollection<int>
+    {
+        private List<T> list;
+
+        public int Count
+        {
+            get
+            {
+                return list.Count;
+            }
+        }
+
+        public CustomCol()
+        {
+            list = new List<T>();
+        }
+
+        public void Add(T item)
+        {
+            list.Add(item);
+        }
+
+        public bool Remove(T item)
+        {
+           bool b =  list.Remove(item);
+            return b;
+        }
+
+        public void Clear()
+        {
+            list.Clear();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return list.GetEnumerator();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return list.GetEnumerator();
+        }
+    }
+}
